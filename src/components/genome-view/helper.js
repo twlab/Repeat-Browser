@@ -5,7 +5,6 @@ export const filterDataAboveCutoff = function(data, cutoff) {
   });
   let filteredList = res.flat();
   // createSessionJSON(filteredList);
-  console.log(filteredList);
   // TODO: function to sort filteredList on RPKM and take top 10
   return filteredList;
 }

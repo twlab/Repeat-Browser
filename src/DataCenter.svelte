@@ -6,7 +6,7 @@
 
   let search = "";
   let page_index = 0;
-  const columns = ["ID", "Assay", "Biosample Type", "Control", "Organism", "Target", "Status"];
+  const columns = ["ID", "Assay", "Biosample Type", "Control", "Assembly", "Target", "Status"];
 
   function searchFor(search) {
     return _data.filter(item => {

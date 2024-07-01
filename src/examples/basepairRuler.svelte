@@ -55,13 +55,8 @@
 
         var range = [min, max + 1];
         var starting_range = [starting_min, starting_max + 1];
-        // console.log(nodeRef);
 
-        const el = document.getElementById('nodeRef')
-        // console.log(parseFloat(window.getComputedStyle(el).width.replace("px", '')))
-        // console.log(window.getComputedStyle(el).height)
-
-
+        const el = document.getElementById('nodeRef');
         // set width and height of svg
         // var w = layout.width
         var w = parseFloat(window.getComputedStyle(el).width.replace("px", ''))
@@ -142,7 +137,7 @@
             .attr("y", height - basepairHeight)
             .attr("height", basepairHeight)
             .attr("width", d => basePair(d+1) - basePair(d))
-            .style("fill", d => {console.log(fastqInput[d]); return basepairColor(fastqInput[d])})
+            .style("fill", d => {return basepairColor(fastqInput[d])})
             .style("opacity", 0.9)
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
@@ -232,8 +227,6 @@
         return svg.node()
     }
     onMount(()=>{
-        // console.log(inputData);
-        // console.log(d3.range(0, 100))
         let rangeSlider = rulerAGCT(0, 800);
     })
 </script>

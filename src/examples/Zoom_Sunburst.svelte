@@ -141,7 +141,6 @@
                 const cartRepeatsName = $Cart.repeats.map(x => x.name);
                 if (d.depth == 3 && cartRepeatsName.includes(d.data.name)) return "#780000";
                 while (d.depth > 1) d = d.parent;
-                // console.log(d);
                 return color(d.data.name);
             })
             .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
@@ -152,11 +151,9 @@
 
                 const cartRepeatsName = $Cart.repeats.map(x => x.name);
                 if (!cartRepeatsName.includes(d.data.name)) {
-                    // console.log('hello1', d.data.name)
                     handleChildSelected(d);
                     this.style.fill = "#780000";
                 } else {
-                    // console.log('hello0', d)
                     recoverChildSelected(d);
                     this.style.fill = color(d.parent.parent.data.name);
                 }
@@ -175,48 +172,39 @@
                     dblclick_timer = false;
                     // double click code code comes here
                     if(d.depth == 2){
-                        console.log(d, d.noFill);
                         d.noFill = typeof d.noFill !== 'undefined' ? d.noFill : false;
-                        console.log(d, d.noFill);
                         if (!d.noFill) {
-                            console.log("Double Click the family, but select!");
+                            // console.log("Double Click the family, but select!");
                             handleSelected(d);
                             path.attr("fill", d => {
                                     const cartRepeatsName = $Cart.repeats.map(x => x.name);
                                     if (d.depth == 3 && cartRepeatsName.includes(d.data.name)) return "#780000";
                                     while (d.depth > 1) d = d.parent;
-                                    // console.log(d);
                                     return color(d.data.name);
                                 })
                             this.style.fill = "#780000";
                         } else {
-                            console.log("Double Click the family!");
+                            // console.log("Double Click the family!");
                             recoverSelected(d);
                             path.attr("fill", d => {
                                 const cartRepeatsName = $Cart.repeats.map(x => x.name);
                                 if (d.depth == 3 && cartRepeatsName.includes(d.data.name)) return "#780000";
                                 while (d.depth > 1) d = d.parent;
-                                // console.log(d);
                                 return color(d.data.name);
                             })
                             this.style.fill = color(d.parent.data.name);
 
                         }
                         d.noFill = !d.noFill;
-                        console.log(d, d.noFill);
                     }
-
-                    // console.log("double click fired")
                 }
                 // otherwise, what to do after single click (double click has timed out)
                 else dblclick_timer = setTimeout( function(){
                     dblclick_timer = false
                     // single click code code comes here
-                    // console.log("single click fired")
                     clicked(d)
                 }, 300);
             })
-            // .on("click", clicked);
 
         path.append("title")
             .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
@@ -336,11 +324,9 @@
     const unsubscribe = Cart.subscribe(async store => {
         const { repeats } = store;
         cartRepeats = repeats;
-        console.log(cartRepeats);
     });
 
     onMount(()=>{
-        // console.log(Cart);
         if($Cart.biosample === 'Human'){
             let chart = Sunburst(REPEATS, {format: d3.format(",d"), width: 932});
         } else {

@@ -52,8 +52,6 @@ const zoom = d3.zoom()
             let linearY = d3.scaleLinear().domain(y.range()).range([domainY[1] - domainY[0], 0]);
             let deltaY = linearY((t.y - lastY)/t.k);
 
-            console.log('(', t.y, lastY, ')', deltaY);
-
             x.domain([domainX[0] + deltaX, domainX[1] - deltaX]);
             y.domain([domainY[0] - deltaY, domainY[1] + deltaY]);
         }

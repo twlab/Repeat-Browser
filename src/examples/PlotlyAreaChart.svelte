@@ -162,7 +162,7 @@
           Plotly.newPlot("area-div" + index, _data, layout, {displayModeBar: false, displaylogo: false})
               .then(function(chartInstance) {
                   chartInstance.on('plotly_relayout', function(eventData) {
-                      console.log('Updated X-Axis Range:', eventData['xaxis.range[0]'], eventData['xaxis.range[1]']);
+                      // console.log('Updated X-Axis Range:', eventData['xaxis.range[0]'], eventData['xaxis.range[1]']);
                       const selectedRange = [eventData['xaxis.range[0]'], eventData['xaxis.range[1]']];
                       dispatch('rangeupdate', { selectedRange });
                   });

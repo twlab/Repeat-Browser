@@ -54,13 +54,9 @@
                     valuesList.push({
                         key: chr.key,
                         values: [chr.values]
-                        // values: {dataName:chr.values}
                     });
                 } else {
-                    // console.log(chr.values);
                     valuesList[chrIndex].values.push(...chr.values)
-                    // console.log(valuesList[chrIndex].values);
-                    // valuesList[chrIndex].values[dataName] = chr.values
                 }
             } else {
                 duplicate = true;
@@ -68,22 +64,11 @@
 
         });
         valuesList.sort((a, b) => parseInt(a.key.replace('chr', '')) - parseInt(b.key.replace('chr', '')))
-        // console.log(valuesList)
         Cart.updateGenomeView(valuesList);
-        // let res = await fetchConsensusDatabyZarr(dataFile, repeatName);
-        // const signal_value = res[0].all.map(x => x.score);
-        // // console.log(signal_value, genomeCopyDense.map(Number))
-        // res.forEach(d =>{
-        //     d["y_range"] = parseInt(1.1 * Math.max(...[].concat(...signal_value)));
-        // })
-        // Cart.updateConsensusTrack([...new Set([...$Cart.consensuslist, ...res])]);
         status = "hidden";
-        // Cart.updateConsensusTrack(res);
     }
 
     onMount(()=>{
-        // console.log($Cart.genomelist)
-        // Cart.updateConsensusTrack([...new Set([...$Cart.consensuslist, "data"])]);
     })
 </script>
 
@@ -97,7 +82,6 @@
                 data={cartData}
                 extract={(item) => item.id}
                 on:select={({ detail }) => {
-                        console.log(detail);
                         readFileData(detail.selected, repeat);
                     }}
         />

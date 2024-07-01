@@ -1,4 +1,3 @@
-
 <script>
     import {onMount, createEventDispatcher} from "svelte";
     import {fetchConsensusDatabyZarr} from "../components/consensus/utils";
@@ -16,21 +15,42 @@
 
     var about_string = 'Click the tile to navigate to the consensus view';
 
-    function clickTile(e){
+    async function clickTile(e){
+        if ((d3.select(this).style('cursor') != 'not-allowed') && (d3.select(this).style('cursor') != 'pointer')){
+            d3.select(this).style('cursor', 'wait');
+        }
         const tag = e.row_name.split('-')[e.row_name.split('-').length-1];
         let dataID;
+        let regex;
         if (!isNaN(tag)){
-            const tagInt = parseInt(tag);
-            dataID = $Cart['data'][tag-1].id;
+            regex = /\(([^)]+)\)/;
+            // const tagInt = parseInt(tag);
+            // dataID = $Cart['data'][tag-1].id;
         } else {
-            const regex = /\((.*?)\)/; // Regex pattern to match the word within brackets
-            const matches = e.row_name.match(regex)[1];
-            const biosample = e.row_name.split(' (')[0];
-            dataID = $Cart['data'].filter(x => (x.Assay == matches || x.Target == matches)
-                && x.Biosample == biosample)[0].id
+            regex = /\((.*?)\)/; // Regex pattern to match the word within brackets
         }
+        const matches = e.row_name.match(regex)[1];
+        const biosample = e.row_name.split(' (')[0];
+        let tileFile = $Cart['data'].filter(x => (x.Assay == matches || x.Target == matches)
+            && x.Biosample == biosample);
+        dataID = tileFile[0].id;
         let eName = dataID;
-        dispatch('tileClick', {data: eName, repeat: e.col_name, value: e.value});
+        try{
+            const tileData = d3.select(this)[0][0].__data__;
+            const tileTE = tileData.col_name;
+            let tileFile = $Cart['data'].filter(x => (x.Assay == matches || x.Target == matches)
+                && x.Biosample == biosample);
+            const res = await fetchConsensusDatabyZarr(tileFile, tileTE, 0);
+            d3.select(this).style('cursor', 'pointer');
+            // d3.select(this).on("click", clickTile);
+            dispatch('tileClick', {data: eName, repeat: e.col_name, value: e.value, activate: true});
+        } catch (e) {
+            d3.select(this).style('cursor', 'not-allowed');
+            dispatch('tileClick', {data: eName, repeat: e.col_name, value: e.value, activate: false});
+            // d3.select(this).on("click", clickTile);
+            // d3.select(this).on("click", ()=>{});
+        }
+        // dispatch('tileClick', {data: eName, repeat: e.col_name, value: e.value});
     }
 
     function make_clust(input_json){
@@ -61,36 +81,7 @@
             d3.select(cgm.params.root + ' .wait_message').remove();
 
             let tile = d3.selectAll('.row_tile')
-                .on('mouseenter', async function () {
-                    if ((d3.select(this).style('cursor') != 'not-allowed') && (d3.select(this).style('cursor') != 'pointer')){
-                        d3.select(this).style('cursor', 'wait');
-                        try{
-                            const tileData = d3.select(this)[0][0].__data__;
-                            const tag = tileData.row_name.split('-')[tileData.row_name.split('-').length-1];
-                            let tileFile;
-                            const tileTE = tileData.col_name;
-                            if (!isNaN(tag)){
-                                const tagInt = parseInt(tag);
-                                tileFile = [$Cart['data'][tag-1]];
-                            } else {
-                                const regex = /\((.*?)\)/; // Regex pattern to match the word within brackets
-                                const matches = tileData.row_name.match(regex)[1];
-                                const biosample = tileData.row_name.split(' (')[0];
-                                tileFile = $Cart['data'].filter(x => (x.Assay == matches || x.Target == matches)
-                                    && x.Biosample == biosample)
-                            }
-                            const res = await fetchConsensusDatabyZarr(tileFile, tileTE, 0);
-                            d3.select(this).style('cursor', 'pointer');
-                            d3.select(this).on("click", clickTile);
-                        } catch (e) {
-                            console.log(e);
-                            d3.select(this).style('cursor', 'not-allowed');
-                            d3.select(this).on("click", clickTile);
-                            // d3.select(this).on("click", ()=>{});
-                        }
-                    }
-
-                });
+                .on("click", clickTile);
         });
     }
 

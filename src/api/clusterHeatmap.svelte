@@ -24,7 +24,6 @@ export function make_clust(){
             'sidebar_width':150,
             'click_tile': function(e){
                 dispatch('tileClick', { data: e.y, repeat: e.x });
-                console.log(e);
             }
             // 'tile_colors':['#ED9124','#1C86EE'],
             // 'ini_view':{'N_row_var':20}
@@ -39,11 +38,7 @@ export function make_clust(){
         });
         let cgm = Clustergrammer(args);
 
-
-        // check_setup_enrichr(cgm);
-
         d3.select(cgm.params.root + ' .wait_message').remove();
-        // cgm.params.click_tile = function(){console.log("Click tile")};
 
     });
 }
@@ -60,7 +55,6 @@ function cat_update_callback(){
 }
 
 function test_tile_callback(tile_data){
-    // console.log('callback to run after cats are updated');
     var row_name = tile_data.row_name;
     var col_name = tile_data.col_name;
 

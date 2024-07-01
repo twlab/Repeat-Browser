@@ -15,7 +15,6 @@
   const { open } = getContext('simple-modal');
 
   const showModal = (event) => {
-    // console.log(event.detail);
     open(DataCenter, { DATA: event.detail });
   };
 </script>

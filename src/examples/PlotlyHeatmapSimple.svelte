@@ -11,7 +11,6 @@
 
   function drawHeatMap(input) {
     const { data, colLabels, rowNames } = input;
-    console.log(data);
     let myPlot = document.getElementById('myDiv');
     const dataDisplay = [
     {

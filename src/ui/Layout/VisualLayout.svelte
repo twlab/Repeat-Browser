@@ -19,6 +19,7 @@
     let heatmapmenu: MenuComponentDev;
     let menu: MenuComponentDev;
     let selected_type = 'Files';
+    let genomeCopyDensity;
 
     let open = true;
 
@@ -67,18 +68,18 @@
         var result = window.confirm("Are you sure you want to change the species? \nAll the data will be reset, please save a session file first!\n Click cancel will jump to saving the session file. \n Click OK to continue.");
         if (result) {
             // OK action
-            console.log("OK pressed. Performing function for OK.");
+            // console.log("OK pressed. Performing function for OK.");
             // Call your function for OK action here
             if($Cart.biosample === 'Human'){
                 Cart.setSpecies('Mouse');
                 Cart.addRepeats([]);
                 Cart.addDataItems([]);
-                console.log($Cart.biosample, '--> ');
+                // console.log($Cart.biosample, '--> ');
             } else {
                 Cart.setSpecies('Human');
                 Cart.addRepeats([]);
                 Cart.addDataItems([]);
-                console.log($Cart.biosample, '--> ');
+                // console.log($Cart.biosample, '--> ');
             }
 
         } else {
@@ -89,7 +90,13 @@
 
     function handleHeatmapClick(event) {
         combination = event.detail;
-        active = 'Consensus View';
+        if(event.detail.activate){
+            active = 'Consensus View';
+        }
+    }
+
+    function transferGenomeDense(event) {
+        genomeCopyDensity = event.detail.data;
     }
 
     function gotoGenomeView(event) {
@@ -186,12 +193,11 @@
             <br />
             <Router url="visual">
                 <Route path="heatmap">
-                    <PlotlyHeatmapContainer on:heatmap-click={handleHeatmapClick}
-                                            on:tileClick={handleHeatmapClick}/>
+                    <PlotlyHeatmapContainer on:loadGenomeDense={transferGenomeDense} on:tileClick={handleHeatmapClick}/>
                 </Route>
                 <Route path="consensus">
                     {#if typeof combination !== "undefined"}
-                        <ConsensusContainer {combination} />
+                        <ConsensusContainer {combination} {genomeCopyDensity} />
                         <hr />
                         <div class="flow-root">
                             <Button class="float-left" on:click={() => {active = "Heatmap"}} touch variant="unelevated">

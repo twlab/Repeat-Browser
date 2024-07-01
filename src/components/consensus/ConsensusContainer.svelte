@@ -18,6 +18,7 @@
   let y_genomecopy_range;
   let trackIndex = 0;
   export let combination;
+  export let genomeCopyDensity;
 
   let repeatName;
   let genomeCopyDense;
@@ -53,17 +54,10 @@
   let mm10GenomeCopydensity;
 
   onMount(async () => {
-    hg38GenomeCopydensity = await fetchJsonData("https://wangftp.wustl.edu/~jshen/rb_GenomeCopyDense/hg38GenomeCopyDensity.json");
-    mm10GenomeCopydensity = await fetchJsonData("https://wangftp.wustl.edu/~jshen/rb_GenomeCopyDense/mm10GenomeCopyDensity.json");
-
     const {data, repeat} = combination;
     repeatName = repeat;
     const dataFile = $Cart.data.filter(file => file.id === data);
-    if(typeof mm10GenomeCopydensity[repeat] === 'undefined'){
-      genomeCopyDense = hg38GenomeCopydensity[repeat];
-    } else {
-      genomeCopyDense = mm10GenomeCopydensity[repeat];
-    }
+    genomeCopyDense = genomeCopyDensity[repeat];
     try {
       let res = await fetchConsensusDatabyZarr(dataFile, repeat, genomeCopyDense.length);
       Cart.updateConsensusTrack(res);

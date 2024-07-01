@@ -56,7 +56,6 @@
                 data={cartData}
                 extract={(item) => item.id}
                 on:select={({ detail }) => {
-                        console.log(detail);
                         readFileData(detail.selected, repeat);
                     }}
         />

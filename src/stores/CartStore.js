@@ -18,7 +18,8 @@
       scale: 2,
       consensuslist: [],
       genomelist: [],
-      multiTEGenomeList: []
+      multiTEGenomeList: [],
+      genomeDensityJson: []
       // files: _data.files // list of all files
     });
 
@@ -43,12 +44,17 @@
       }),
 
       updateGenomeView: (newVal) => update(n => {
-        n.genomelist = newVal;
+        n.genomeDensityJson = newVal;
         return n;
       }),
 
       updateMultiTEGenomeList: (newVal) => update(n => {
         n.multiTEGenomeList = newVal;
+        return n;
+      }),
+
+      updateGenomeDensityJson: (newVal) => update(n => {
+        n.genomeDense = newVal;
         return n;
       }),
 

@@ -23,7 +23,6 @@
         const filteredData = defaultData['data'].filter(function(item) {
             return item.Target == "H3K4me1";
         });
-        console.log(filteredData);
     }
 
     showDataTable()

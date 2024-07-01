@@ -29,7 +29,6 @@
 
   afterUpdate(() => {
     if (localStorage.Cart && JSON.parse(localStorage.Cart).data.length > 0) {
-      console.log(JSON.parse(localStorage.Cart))
       let {data, repeats} = JSON.parse(localStorage.Cart)
       Cart.addDataItems(data);
       Cart.addRepeats(repeats);

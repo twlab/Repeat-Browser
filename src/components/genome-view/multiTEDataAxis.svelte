@@ -39,7 +39,6 @@
 
     const RPKMList = data.map(d => d.RPKM);
     const averageValue = RPKMList.reduce((sum, num) => sum + num, 0) / RPKMList.length;
-    console.log(averageValue);
     // Calculate the average value of the array
 
     function calDotPixel(RPKM, meanPixel){
@@ -70,7 +69,6 @@
         const genomeEnd = data.points[0].text.split(' - ')[1];
         const genomeChr = data.points[0].data.chr;
 
-        // console.log(data.points[0], sessionInput);
         let assembly = specy;
         if ((assembly === 'hg38') || (assembly === 'GRCh38')){
             // organism = 'human'
@@ -96,7 +94,6 @@
             }
         }
         let jsonForm = JSON.stringify(form)
-        // console.log(form);
         const url_submit="https://hcwxisape8.execute-api.us-east-1.amazonaws.com/dev/datahub/";
         await fetch(url_submit, {
             method: 'POST',
@@ -135,7 +132,6 @@
                 }
 
             } else {
-                console.log(calDotPixel(d.RPKM, 12) );
                 let trace = {
                     x: [parseInt(d.start)],
                     y: [d.RPKM],
@@ -175,7 +171,6 @@
         function writeSelectedRange() {
             var r = ideogram.selectedRegion;
             axisRange = [r.from, r.to];
-            console.log(axisRange);
         }
         let ideoWidth = 500;
         if(checkedLollipop){
@@ -283,7 +278,6 @@
                 }
 
             } else {
-                console.log(calDotPixel(d.RPKM, 12) );
                 let trace = {
                     x: [parseInt(d.start)],
                     y: [d.RPKM],
@@ -319,8 +313,6 @@
             }
             lollipopShape.push(lollipopValue);
         })
-
-        console.log(testData, data);
 
         let lollipopPlot;
         let myPlot

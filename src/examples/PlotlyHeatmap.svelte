@@ -13,7 +13,6 @@
   onMount(() => {
     dataLabels = propsData[TYPE].map(d => d.id);
     onlyData = extractRequiredDataPoints(propsData, repeatLabels, TYPE);
-    console.log(propsData);
     if (onlyData !== undefined) {
       $Cart.scale = Math.max(...[].concat(...onlyData));
       drawHeatMap(onlyData, repeatLabels, dataLabels, $Cart.scale);
@@ -67,7 +66,6 @@
   }
 
   function extractRequiredDataPoints(DATA, repeats, TYPE) {
-    console.log(DATA)
     const toReturn = DATA[TYPE].map(row => {
       let tmp = [];
       repeats.forEach(element => {

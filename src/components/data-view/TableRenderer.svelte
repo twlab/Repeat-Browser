@@ -2,7 +2,6 @@
   import { createEventDispatcher } from "svelte";
   import _data2 from "../../../src/json/rpbr_data/all_data_withoutFantom.json"
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-  import Button, { Label } from '@smui/button';
 
   let clicked = 0;
 
@@ -57,29 +56,6 @@
   ]
 
   const dispatch = createEventDispatcher();
-  // export let data;
-
-  // let pivotData = new PivotData(data);
-  // let colAttrs = pivotData.props.cols;
-  // let rowAttrs = pivotData.props.rows;
-  // let rowKeys = pivotData.getRowKeys();
-  // let colKeys = pivotData.getColKeys();
-  //
-  // beforeUpdate(() => {
-  //   pivotData = new PivotData(data);
-  //   colAttrs = pivotData.props.cols;
-  //   rowAttrs = pivotData.props.rows;
-  //   rowKeys = pivotData.getRowKeys();
-  //   colKeys = pivotData.getColKeys();
-  //
-  //   console.log(rowKeys)
-  // });
-
-  // function handleCellClick(input) {
-  //     let filteredResults = getFiltered(data.data, input);
-  //     dispatch('cell-click', filteredResults);
-  // }
-
 
   function handleCellClickNew(input) {
     const specy = input.specy;
@@ -95,13 +71,10 @@
     {
       organism_items = mouse_items;
     }
-    // let filteredResults = _data2.data.filter(item => {
-    //   return item.Assay.toUpperCase() == assay.toUpperCase() && organism_items.includes(item.Organism)
-    // });
+
     let filteredResults = _data2.filter(item => {
       return item.Assay.toUpperCase() == assay.toUpperCase() && organism_items.includes(item.Organism)
     });
-    // console.log(filteredResults);
     dispatch('cell-click', filteredResults);
   }
 </script>

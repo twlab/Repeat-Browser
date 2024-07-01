@@ -80,9 +80,7 @@
         //                 // values: {dataName:chr.values}
         //             });
         //         } else {
-        //             // console.log(chr.values);
         //             valuesList[chrIndex].values.push(...chr.values)
-        //             // console.log(valuesList[chrIndex].values);
         //             // valuesList[chrIndex].values[dataName] = chr.values
         //         }
         //     } else {
@@ -92,12 +90,9 @@
         // });
         // valuesList.sort((a, b) => parseInt(a.key.replace('chr', '')) - parseInt(b.key.replace('chr', '')))
 
-
-        console.log(repeatName, valuesList, dataToRender);
         Cart.updateMultiTEGenomeList(valuesList);
         // let res = await fetchConsensusDatabyZarr(dataFile, repeatName);
         // const signal_value = res[0].all.map(x => x.score);
-        // // console.log(signal_value, genomeCopyDense.map(Number))
         // res.forEach(d =>{
         //     d["y_range"] = parseInt(1.1 * Math.max(...[].concat(...signal_value)));
         // })
@@ -107,7 +102,6 @@
     }
 
     onMount(()=>{
-        // console.log($Cart.genomelist)
         // Cart.updateConsensusTrack([...new Set([...$Cart.consensuslist, "data"])]);
     })
 </script>
@@ -122,7 +116,6 @@
                 data={cartRepeats}
                 extract={(item) => `${item.name} >> ${item.family} >> ${item.class}`}
                 on:select={({ detail }) => {
-                        console.log(detail);
                         readFileData(data, detail.original.name);
                     }}
         />

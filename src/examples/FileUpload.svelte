@@ -22,7 +22,6 @@
     async function update_data(){
         const file = files[0]
         const json_content = await file.text().then(d => {
-            console.log(JSON.parse(d));
             const {data, repeats, species} = JSON.parse(d);
             Cart.addDataItems(data);
             Cart.addRepeats(repeats);

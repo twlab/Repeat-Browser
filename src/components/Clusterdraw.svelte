@@ -2,5 +2,5 @@
   export let data;
   // import {Clustergrammer} from '../vendor/clustermaker/main'
 
-  console.log(data);
+  // console.log(data);
 </script>

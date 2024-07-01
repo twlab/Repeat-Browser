@@ -61,7 +61,6 @@
   let data2color = {}
   const colorList = {1: "red", 2: "blue", 3: "green", 4: "yellow", 5: "purple"};
   $: data = datalist;
-  // console.log($Cart.genomelist);
 
   onMount(() => {
       unsubscribe;
@@ -84,7 +83,6 @@
           .attr("height", 22)
           .style("fill", "rgba(0,149,255, .4)")
           .on("click", function(d) {
-              // console.log(data, filteredData);
               handleGenomeClick(filteredData);
           })
      createChromosomeBody(data);
@@ -104,7 +102,6 @@
       const dataInfo = cartData.filter(x => x.id == sessioInput[0].values[0].data);
 
       sessioInput[0].values[0].data = dataInfo[0];
-      console.log($Cart);
 
       sessionFile = createSession(sessioInput, 1, repeat, UUID);
       alert("Jumping to the WashU Epigenome Browser!");
@@ -119,7 +116,6 @@
           }
       }
       let jsonForm = JSON.stringify(form)
-      // console.log(form);
       await fetch(url_submit, {
           method: 'POST',
           headers: {
@@ -132,9 +128,6 @@
       })
 
       return 0
-
-      // console.log(`https://hcwxisape8.execute-api.us-east-1.amazonaws.com/dev/datahub/${UUID}`)
-      // fileDownload(sessionFile, `${UUID}_region_sets.json`);
   }
 
   function getColor(dataName){
@@ -145,7 +138,6 @@
   }
 
   function filterAboveCutoff(data) {
-      // console.log(data);
       return data.filter(d => d.RPKM > cutoff)
   }
 
@@ -188,7 +180,6 @@
             .enter()
             .append("rect")
             .attr("x", function (d, i) {
-                // console.log(data);
                 return xScale(d.start) + 55;
             })
             .attr("y", -4)
@@ -206,7 +197,6 @@
                 }
             })
             .on("mouseover", function(d) {
-                // console.log( d3.event.pageX + "px", d3.event.pageY + "px")
                 d3.select(this)
                     .attr("width", 5)
                     .attr("height", 35);
@@ -234,7 +224,7 @@
                     .duration(100)
                     .style("opacity", 0);
             })
-            .on("click", function(d){console.log('!');});
+            // .on("click", function(d){console.log('!');});
             // .on("click", function(d){handleSessionDownload(d)});
   }
 

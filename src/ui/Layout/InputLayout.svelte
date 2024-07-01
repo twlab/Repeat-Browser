@@ -37,7 +37,7 @@
         var result = window.confirm("All the data will be reset! Please save a session file first!\n Click cancel will jump to saving the session file. \n Click OK to continue.");
         if (result) {
             // OK action
-            console.log("OK pressed. Performing function for OK.");
+            // console.log("OK pressed. Performing function for OK.");
             // Call your function for OK action here
             if($Cart.biosample === 'Human'){
                 Cart.setSpecies('Mouse');
@@ -121,7 +121,6 @@
 
     $: {
         if(tab_active == tabs[1]) {navigate('/visual');}
-        // console.log(Cart.biosample);
     }
 </script>
 

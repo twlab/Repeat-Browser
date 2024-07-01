@@ -31,12 +31,8 @@
 
         var range = [min, max + 1];
         var starting_range = [starting_min, starting_max + 1];
-        // console.log(nodeRef);
 
         const el = document.getElementById('nodeRef')
-        console.log(parseFloat(window.getComputedStyle(el).width.replace("px", '')))
-        console.log(window.getComputedStyle(el).height)
-
 
         // set width and height of svg
         // var w = layout.width
@@ -114,7 +110,6 @@
                 if (!d3.event.sourceEvent) return;
                 var d0 = d3.event.selection.map(x.invert);
                 var d1 = d0.map(Math.round)
-                // console.log(d1);
                 dispatch('range', {
                     range: d1
                 });
@@ -167,8 +162,6 @@
         return svg.node()
     }
     onMount(()=>{
-        console.log(inputData);
-        console.log(d3.range(0, 100))
         let rangeSlider = slider_snap(0, inputRange);
     })
 </script>

@@ -69,7 +69,6 @@
 
         var range = [min, max + 1];
         var starting_range = [starting_min, starting_max + 1];
-        // console.log(nodeRef);
 
         const el = document.getElementById('nodeRef')
 
@@ -168,7 +167,6 @@
                 if (!d3.event.sourceEvent) return;
                 var d0 = d3.event.selection.map(x.invert);
                 var d1 = d0.map(Math.round)
-                // console.log(d1);
                 dispatch('range', {
                     range: d1
                 });

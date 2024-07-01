@@ -53,8 +53,21 @@
   function functionWithOK() {
       var result = alert("Please select at least two data and two repeats!");
       navigate("/input/data");
-      console.log("Performing function for OK.");
       return 0
+  }
+
+  async function fetchJsonData(url) {
+      try {
+          const response = await fetch(url);
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const jsonData = await response.json();
+          return jsonData;
+      } catch (error) {
+          console.error('Error fetching data:', error);
+          return null; // Return null or appropriate error handling
+      }
   }
 
   const unsubscribe = Cart.subscribe(async store => {
@@ -83,7 +96,6 @@
               rna_data.push(rna_data[0])
           }
         heatmap_json_rna = await getBackendjson(rna_data, 'subfamStat', repeats);
-        console.log(heatmap_json_rna.length);
         loaded[1]=true;
       }
 
@@ -92,6 +104,16 @@
       } else if(loaded[1]){
           Cart.setAssayRNA();
       }
+    }
+
+    if ($Cart.species === 'Mouse'){
+        let mm10GenomeCopydensity = await fetchJsonData("https://s3-obs1.htcf.wustl.edu/repeatbrowser/documentation/mm10GenomeCopyDensity.json");
+        dispatch('loadGenomeDense', {data: mm10GenomeCopydensity});
+        // Cart.updateGenomeDensityJson(mm10GenomeCopydensity);
+    } else {
+        let hg38GenomeCopydensity = await fetchJsonData("https://s3-obs1.htcf.wustl.edu/repeatbrowser/documentation/hg38GenomeCopyDensity.json");
+        dispatch('loadGenomeDense', {data: hg38GenomeCopydensity});
+        // Cart.updateGenomeDensityJson(hg38GenomeCopydensity);
     }
   });
 

@@ -1,18 +1,13 @@
 <script>
-    import * as d3 from 'd3';
     import {onMount, afterUpdate} from 'svelte';
     import Plotly from "plotly.js";
-    import { Cart, genomeModal } from "../../stores/CartStore";
-    // import WigURLModal from './WigURLModal.svelte';
+    import { Cart } from "../../stores/CartStore";
+
     import Dialog, { Title, Content, Actions } from '@smui/dialog';
     import Button, { Label } from '@smui/button';
     import { createSession } from './createSession';
     import chromosomesLength from "../../json/chromosomes_length.json";
     import uuid from "uuid";
-    import VirtualList from 'svelte-tiny-virtual-list';
-    import LayoutGrid, { Cell } from '@smui/layout-grid';
-    import {Text} from "@smui/list";
-    // import {repeat} from "./Chromosome.svelte";
     import Switch from '@smui/switch';
     import FormField from '@smui/form-field';
     import ElementScreenshot from '../../examples/ElementScreenshot.svelte';
@@ -42,7 +37,6 @@
 
     const RPKMList = data.map(d => d.RPKM);
     const averageValue = RPKMList.reduce((sum, num) => sum + num, 0) / RPKMList.length;
-    console.log(averageValue);
     // Calculate the average value of the array
 
     function calDotPixel(RPKM, meanPixel){
@@ -58,7 +52,6 @@
     async function wigURLModalfunc(){
         UUID = uuid.v4();
         const data = dotData;
-        // console.log(wigURL);
         var pts = '';
         for(var i=0; i < data.points.length; i++){
             pts = 'x = '+data.points[i].x +'\ny = '+
@@ -74,7 +67,6 @@
         const genomeEnd = data.points[0].text.split(' - ')[1];
         const genomeChr = data.points[0].data.chr;
 
-        // console.log(data.points[0], sessionInput);
         let assembly = specy;
         if ((assembly === 'hg38') || (assembly === 'GRCh38')){
             // organism = 'human'
@@ -87,21 +79,14 @@
             assembly = assembly
         }
         let sessionFile = createSession(sessionInput, 1, repeat, assembly, UUID, wigURL);
-        // let sessionFile = createSession(sessionInput, 1, repeat, UUID);
-        // alert("Jumping to the WashU Epigenome Browser!");
 
-        // const form = new FormData();
-        // form.append("_id", `${UUID}`);
-        // form.append("hub", {"content": [1,2]});
         let form = {
             "_id": `${UUID}`,
             "hub": {
                 "content": JSON.parse(sessionFile)
             }
         }
-        console.log(form);
         let jsonForm = JSON.stringify(form)
-        // console.log(form);
         const url_submit="https://hcwxisape8.execute-api.us-east-1.amazonaws.com/dev/datahub/";
         await fetch(url_submit, {
             method: 'POST',
@@ -174,10 +159,8 @@
         })
 
         function writeSelectedRange() {
-            console.log()
             var r = ideogram.selectedRegion;
             axisRange = [r.from, r.to];
-            console.log(axisRange);
         }
         let ideoWidth = 500;
         if(checkedLollipop){
@@ -194,8 +177,6 @@
             brush: `${selectedChromosome}:1-${testData[0].x[testData[0].x.length - 1]}`, // https://www.ncbi.nlm.nih.gov/dbvar/variants/nsv916356
             chrHeight: ideoWidth - 100,
             chrMargin: 0,
-            // chrWidth: 6,
-            // resolution: 550,
             orientation: 'horizontal',
             onBrushMove: writeSelectedRange,
             onLoad: writeSelectedRange
@@ -203,7 +184,6 @@
 
         var ideogram = new Ideogram(ideo_config);
         const maxLength = ideogram.maxLength;
-        console.log(ideogram, maxLength.bp);
 
         let lollipopPlot;
         let myPlot
@@ -229,7 +209,6 @@
                 title: {
                     text: 'RPKM'
                 }
-                // range: [0, 8]
             },
             title:`Genome View on Chromosome ${selectedChromosome.replace('chr', '')}`
         };
@@ -245,7 +224,6 @@
                     text: 'Chromosome'
                 },
                 range: axisRange
-                // range: [0, 6]
             },
             yaxis: {
                 rangemode: 'tozero',
@@ -253,7 +231,6 @@
                     text: 'RPKM'
                 }
 
-                // range: [0, 8]
             },
             title:`Genome View on Chromosome ${selectedChromosome.replace('chr', '')}`
         };
@@ -268,30 +245,6 @@
 
     afterUpdate(() =>{
         let layout = {};
-
-        // function writeSelectedRange() {
-        //     var r = ideogram.selectedRegion;
-        //     console.log(r);
-        //     axisRange = [r.from, r.to]
-        //     // axisStart = r.from;
-        //     // axisEnd = r.to;
-        // }
-        //
-        // var ideo_config = {
-        //     container: '.ideogram-container-data',
-        //     organism: $Cart.biosample.toLowerCase(),
-        //     assembly: specy,
-        //     chromosome: selectedChromosome.replace('chr', ''),
-        //     brush: `${selectedChromosome}:1-${chromosomesLength[selectedChromosome]}`, // https://www.ncbi.nlm.nih.gov/dbvar/variants/nsv916356
-        //     // chrHeight: 900,
-        //     // chrWidth: 10,
-        //     // resolution: 550,
-        //     orientation: 'horizontal',
-        //     onBrushMove: writeSelectedRange,
-        //     onLoad: writeSelectedRange
-        // };
-        //
-        // var ideogram = new Ideogram(ideo_config);
 
         let testData = [];
         let lollipopShape = [];
@@ -345,7 +298,6 @@
             }
             lollipopShape.push(lollipopValue);
         })
-        console.log(testData, data);
 
         let lollipopPlot;
         let myPlot
@@ -355,7 +307,6 @@
             myPlot = document.getElementById('dataScatter');
         }
 
-        console.log(axisRange);
         layout = {
             margin: {b:25},
             modebar: {orientation: 'v'},
@@ -370,7 +321,6 @@
                 title: {
                     text: 'RPKM'
                 }
-                // range: [0, 8]
             },
             title:`Genome View on Chromosome ${selectedChromosome.replace('chr', '')}`
         };
@@ -390,7 +340,6 @@
                 title: {
                     text: 'RPKM'
                 }
-                // range: [0, 8]
             },
             title:`Genome View on Chromosome ${selectedChromosome.replace('chr', '')}`
         };
