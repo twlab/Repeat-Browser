@@ -2,7 +2,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Cart } from '../stores/CartStore';
-  import { getBackendjson} from '../api/heatmap';
+  import { getBackendjson } from '../api/heatmap';
   import LinearProgress from '../ui/LinearProgress.svelte';
 
   import VirtualList from 'svelte-tiny-virtual-list';
@@ -82,7 +82,6 @@
       // dataPromise = getZarrForHeatmapAll(debug_data.files, 'Zarr', repeats);
       let rna_data = data.filter((el) => (el.Assay.includes("CAGE") || el.Assay.includes("RNA")));
       let dna_data = data.filter((el) => !(el.Assay.includes("CAGE") || el.Assay.includes("RNA")));
-
       if (!(dna_data === undefined || dna_data.length == 0)){
           if(dna_data.length == 1){
               dna_data.push(dna_data[0])
@@ -124,6 +123,7 @@
     'root': '#container-id-1',
     'network_data': network_data
   }
+
 
   onMount(unsubscribe);
 

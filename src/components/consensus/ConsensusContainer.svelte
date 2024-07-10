@@ -74,7 +74,7 @@
   });
 
   $: yRange = parseInt(1.1 * Math.max(...$Cart.consensuslist.map(x => x.y_range)));
-  $: console.log(yRange);
+  // $: console.log(yRange);
 
 </script>
 
@@ -113,7 +113,7 @@
                 {/key}
               </div>
               <Modal show={$consensusModal}>
-                <AddTrack repeat={combination.repeat} hg38CopyDense={hg38GenomeCopydensity}/>
+                <AddTrack repeat={combination.repeat} hg38CopyDense={genomeCopyDensity}/>
               </Modal>
 
             </div>

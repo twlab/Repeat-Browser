@@ -511,10 +511,6 @@ export async function getBackendjson(DATASETS, KEY, SUBFAMILIES){
             backend_input_str_line2 += "Family: " + r.family + '\t';
             backend_input_str_line3 += "Class: " + r.class + '\t';
         })
-        // const test_string = backend_input_str_line1.replace(/\t(?=[^\t]+$)/, "\n");
-        // backend_input_str_line1 += - "\t" + "\n"
-        // backend_input_str_line2 += - "\t" + '\n'
-        // backend_input_str_line3 += - "\t" + '\n'
         backend_input_str_line1 = backend_input_str_line1.slice(0, -1) + '\n';
         backend_input_str_line2 = backend_input_str_line2.slice(0, -1) + '\n';
         backend_input_str_line3 = backend_input_str_line3.slice(0, -1) + '\n';
@@ -523,36 +519,22 @@ export async function getBackendjson(DATASETS, KEY, SUBFAMILIES){
         const promisesList = [];
         let dataFetchedNow = [];
 
-        // DATASETS.forEach(DATASET => {
-        //     promisesList.push(getFileAndUnzipAll(DATASET, KEY));
-        // })
-
         DATASETS.forEach(FILE => {
             promisesList.push(getZarrStatdata(FILE, SUBFAMILIES));
         })
 
         dataFetchedNow = await Promise.all(promisesList);
-        // const allDataList = dataFetchedBefore.concat(dataFetchedNow);
-        // const dataFormatted = allDataList.map(item => reshapeZarrStatFormat(item));
-
-        // const dataFilteredForSubfamilies = filterForRequestedRepeats(allDataList, SUBFAMILIES);
-        // storeInLocalStorage(dataFilteredForSubfamilies);
         let backend_input_str_all = ""
         let backend_input_str_unique = ""
         for(let i=0; i<DATASETS.length; i++){
-            // console.log(DATASETS[i]);
             const { all, unique } = dataFetchedNow[i];
             let str_line_header;
-            // console.log(DATASETS[i]);
             if (DATASETS[i].Target == 'unknown' || typeof DATASETS[i].Target === 'undefined'){
                 str_line_header = "File: " +  `${DATASETS[i].Biosample} (${DATASETS[i].Assay})` + "\t" + "Info: " + DATASETS[i].id +"\t";
             } else {
                 str_line_header = "File: " +  `${DATASETS[i].Biosample} (${DATASETS[i].Target})` + "\t" + "Info: " + DATASETS[i].id +"\t";
             }
 
-            // let str_line_header = "File: " +  `${DATASETS[i].Assay} in ${DATASETS[i].Biosample}` + "\t" + "Info: " + DATASETS[i].id +"\t";
-            // let str_line_header = "File: " +  DATASETS[i].id + "\t" + "Info: " + `${DATASETS[i].Assay} in ${DATASETS[i].Biosample}` +"\t";
-            // let str_line_header = "File: " + DATASETS[i].id + "\t" + "Biosample Type: " + DATASETS[i].Biosample +"\t";
             let str_line_content_all = "";
             let str_line_content_unique = "";
             SUBFAMILIES.forEach(r => {

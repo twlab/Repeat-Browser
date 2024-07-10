@@ -3,15 +3,12 @@
   import * as d3 from 'd3';
   import uuid from "uuid";
   import { createSession } from './createSession';
-  // import { zoom, select } from "d3";
 
   const screenWidth = 1000;
   const screenHeight = 500;
   let node, bindHandleZoom;
   let tooltip;
   export let chr;
-  // export let dataset;
-  // export let data;
   export let datalist;
   let filteredData;
   export let cutoff;
@@ -23,16 +20,12 @@
 
   import CHROMOSOMES_LENGTH_HG38 from '../../json/chromosomes_length.json'
   import CHROMOSOMES_LENGTH_MM10 from '../../json/mm10_chromosome_length.json'
-  import {getFiltered} from "../data-view/data-helper";
   import {Cart} from "../../stores/CartStore";
-  import annotations from "../../json/SRR562646.json";
 
   let chrLength;
   let width;
   let UUID;
   let sessionFile;
-  // let chrLength = CHROMOSOMES_LENGTH_HG38[chr];
-  // let width = CHROMOSOMES_LENGTH_HG38[chr];
   let cartData;
   let cartRepeats;
   let cartGenomelist;
@@ -66,14 +59,12 @@
       unsubscribe;
       UUID = uuid.v4();
 
-    // filteredData = filterAboveCutoff(data);
       d3.select(node)
           .selectAll("rect.bar")
           .data([chrLength])
           .enter()
           .append("rect")
           .attr("class", "bar")
-      // .style("fill", "rgba(0,149,255, 1)")
 
       d3.select(node)
           .selectAll("rect.bar")
@@ -106,9 +97,6 @@
       sessionFile = createSession(sessioInput, 1, repeat, UUID);
       alert("Jumping to the WashU Epigenome Browser!");
 
-      // const form = new FormData();
-      // form.append("_id", `${UUID}`);
-      // form.append("hub", {"content": [1,2]});
       let form = {
           "_id": `${UUID}`,
           "hub": {
@@ -190,8 +178,6 @@
             .style("fill", function (d, i) {
                 if (d.RPKM > 0) {
                     return colorFunction(getColor(d.data))(d.RPKM)
-                    // return colorScale(d.RPKM)
-                    // return "#ff0000"
                 } else {
                     return "#3232FF"
                 }
@@ -223,20 +209,14 @@
                 div.transition()
                     .duration(100)
                     .style("opacity", 0);
-            })
-            // .on("click", function(d){console.log('!');});
-            // .on("click", function(d){handleSessionDownload(d)});
+            });
+
   }
 
   function handleGenomeClick(input) {
       input["chromosome"] = chr;
       dispatch('genome-click', input);
   }
-
-  // function handlePosClick(input) {
-  //     console.log(input);
-  //     dispatch('genome-click', input);
-  // }
 
 </script>
 
@@ -257,10 +237,6 @@
 <div bind:this={tooltip} class="tooltip"></div>
 
 <style>
-/*.logo-wrapper svg {*/
-/*  fill: green;*/
-/*  !* background-color: blueviolet; *!*/
-/*} */
 
 .tooltip {
     position: absolute;

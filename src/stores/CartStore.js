@@ -7,19 +7,14 @@
   function createStore() {
     const {subscribe, set, update} = writable({
       data: [],
-      // humanData: [],
-      // mouseData: [],
       repeats: [],
-      // humanRepeats: [],
-      // mouseRepeats: [],
       assay: 'DNA-seq',
       biosample: 'Human',
       species: 'Human',
       scale: 2,
       consensuslist: [],
       genomelist: [],
-      multiTEGenomeList: [],
-      genomeDensityJson: []
+      multiTEGenomeList: []
       // files: _data.files // list of all files
     });
 
@@ -44,17 +39,12 @@
       }),
 
       updateGenomeView: (newVal) => update(n => {
-        n.genomeDensityJson = newVal;
+        n.genomelist = newVal;
         return n;
       }),
 
       updateMultiTEGenomeList: (newVal) => update(n => {
         n.multiTEGenomeList = newVal;
-        return n;
-      }),
-
-      updateGenomeDensityJson: (newVal) => update(n => {
-        n.genomeDense = newVal;
         return n;
       }),
 

@@ -11,7 +11,7 @@
 
     import {Cart} from "../stores/CartStore";
     import {onMount} from "svelte";
-    import defaultData from "../json/default_cart_data.json";
+    // import defaultData from "../json/default_cart_data.json";
     import {getZarrParameters} from '../api/inputdata';
     import {dataTour} from "../api/toursteps"
 

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import _data2 from "../../../src/json/rpbr_data/all_data_withoutFantom.json"
+  // import _data2 from "../../../src/json/rpbr_data/all_data_withoutFantom.json"
+  import _data2 from "../../../src/json/rpbr_data/all_data.json"
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 
   let clicked = 0;
