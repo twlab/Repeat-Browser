@@ -8,7 +8,7 @@
     import Fab from '@smui/fab';
     import { Icon } from '@smui/icon-button';
     import VirtualList from 'svelte-tiny-virtual-list';
-
+    import Select, { Option } from '@smui/select';
     import {Cart} from "../stores/CartStore";
     import {onMount} from "svelte";
     // import defaultData from "../json/default_cart_data.json";
@@ -30,6 +30,8 @@
     let files;
 
     let valueA=0;
+
+    const assembly = ["hg38", "hg19", "mm10"];
 
     // $: if (files) {
     //     update_data();
@@ -75,7 +77,16 @@
     <div class="flex flex-col justify-center" style="width: 67%">
         <div class="flex flex-col justify-center w-full px-4">
             <div class="bg-gray-200 block px-4 rounded-t shadow-lg bg-white w-full">
-                <h5 class="text-gray-900 text-xl leading-tight font-medium py-2">Data Selection:</h5>
+                <span class="text-gray-900 text-xl leading-tight font-medium py-2">Data Selection:</span>
+                <div style="display: inline-flex; margin-left: 1rem; align-items: center;">
+                    <div>
+                        <Select bind:value={$Cart.assembly} label="Assembly Type">
+                            {#each assembly as ass}
+                                <Option value={ass} click:on={()=>Cart.setAssembly(ass)}>{ass}</Option>
+                            {/each}
+                        </Select>
+                    </div>
+                </div>
             </div>
             <div class="block p-4 rounded-b shadow-lg bg-white max-w-sm w-full" id="default-data-table">
                 <Modal>
@@ -143,6 +154,7 @@
 
 <div class="flex justify-center w-full px-4">
     <Fab color="primary" on:click={() => {
+        Cart.setSpecies(defaultData.biosample);
         Cart.addDataItems(defaultData.data);
         Cart.addRepeats(defaultData.repeats);
     }} extended ripple={false}>

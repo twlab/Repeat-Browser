@@ -1,6 +1,8 @@
 <script>
   import {Router, Route, link, navigate} from "svelte-routing";
   import {Cart} from "/src/stores/CartStore";
+  import Select, { Option } from '@smui/select';
+  import Button, { Label, Icon } from '@smui/button';
   import Footer from "./ui/footer.svelte"
   import Myapp from "./myapp"
   import Input from "./ui/Layout/InputLayout.svelte"
@@ -27,6 +29,46 @@
     }
   }
 
+  // Function with OK action
+  function changeSpecies() {
+    var result = window.confirm("Are you sure you want to change the species? \nAll the data will be reset, please save a session file first!\n Click cancel will jump to saving the session file. \n Click OK to continue.");
+    if (result) {
+      // OK action
+      // console.log("OK pressed. Performing function for OK.");
+      // Call your function for OK action here
+      if($Cart.biosample === 'Human'){
+        Cart.setSpecies('Mouse');
+        Cart.addRepeats([]);
+        Cart.addDataItems([]);
+        console.log($Cart.biosample, '--> ');
+      } else {
+        Cart.setSpecies('Human');
+        Cart.addRepeats([]);
+        Cart.addDataItems([]);
+        console.log($Cart.biosample, '--> ');
+      }
+
+    } else {
+      // Cancel action or do nothing
+      navigate("/input/display");
+    }
+  }
+
+  // Boolean variable to track the state of the switch
+  let isOn = false;
+
+  // Function to toggle the switch state
+  function toggleSwitch() {
+    isOn = !isOn;
+  }
+
+  // Array of options for the dropdown
+  let options = ['Human', 'Animal', 'Alien'];
+
+  // Variable to hold the selected value
+  let selectedOption = options[0];
+  let clicked = 0;
+
   export let url = "";
 </script>
 
@@ -34,11 +76,25 @@
   <div class="flex items-center flex-shrink-0 text-white mr-6">
     <img class="fill-current h-10 w-12 mr-2" width="54" height="54" viewBox="0 0 54 54" src="/images/rb_logo.svg">
     <span class="font-semibold text-2xl tracking-tight">Repeat Browser</span>
-    {#if $Cart.biosample === 'Mouse'}
-      <Graphic class="material-icons pl-2" aria-hidden="true"> pest_control_rodent </Graphic>
-    {:else}
-      <Graphic class="material-icons pl-2" aria-hidden="true"> accessibility_new </Graphic>
-    {/if}
+    <h5 class="text-xl leading-tight font-medium pl-2 inline-flex justify-between items-center">
+      <div style="display: flex; margin-left: 1rem; align-items: center;">
+        <!-- Dropdown component -->
+        <Button
+                on:click={() => {changeSpecies()}}
+                variant="unelevated"
+                class="button-shaped-round"
+        >
+          {#if $Cart.biosample === 'Mouse'}
+            <Icon class="material-icons" aria-hidden="true"> pest_control_rodent </Icon>
+          {:else}
+            <Icon class="material-icons" aria-hidden="true"> accessibility_new </Icon>
+          {/if}
+<!--          <Icon class="material-icons">favorite</Icon>-->
+          <Label>{$Cart.biosample}</Label>
+        </Button>
+      </div>
+    </h5>
+
   </div>
   <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
     <div class="text-base lg:flex-grow">

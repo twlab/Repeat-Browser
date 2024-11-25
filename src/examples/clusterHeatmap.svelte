@@ -140,9 +140,9 @@
 
 <div class="flex flex-col justify-center w-full">
     <div class="bg-gray-200 block px-4 rounded-t shadow-lg bg-white max-w-sm w-full">
-        <h5 class="text-gray-900 text-xl leading-tight font-medium py-2 px-4 inline">
-            Heatmap (Species: {$Cart.biosample})
-            <div style="justify-content: flex-start; display: inline-block; margin-left: 1rem">
+        <h5 class="text-gray-900 text-xl leading-tight font-medium py-2 px-4 inline-flex justify-between items-center w-full">
+            <span>Heatmap (Species: {$Cart.biosample})</span>
+            <div style="display: inline-flex; margin-left: 1rem; align-items: center;">
                 <div>
                     <Select bind:value={$Cart.assay} label="Assay Type">
                         {#each assays as assay}
@@ -151,8 +151,10 @@
                     </Select>
                 </div>
             </div>
+            <span style="margin-left: auto;">Click on a <b>Heatmap cell</b> to navigate to the next figures.</span>
         </h5>
     </div>
+
     <div class="p-6 block rounded-b shadow-lg bg-white max-w-sm w-full px-4">
         <div id='container-id-1'>
             <h1 class='wait_message'>Please wait ...</h1>

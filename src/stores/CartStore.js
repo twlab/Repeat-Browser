@@ -14,7 +14,8 @@
       scale: 2,
       consensuslist: [],
       genomelist: [],
-      multiTEGenomeList: []
+      multiTEGenomeList: [],
+      assembly: ""
       // files: _data.files // list of all files
     });
 
@@ -66,6 +67,11 @@
       setSpecies: (species) => update( n => {
         n.biosample = species;
         n.species = species;
+        return n;
+      }),
+
+      setAssembly: (assembly) => update( n => {
+        n.assembly = assembly;
         return n;
       })
     }

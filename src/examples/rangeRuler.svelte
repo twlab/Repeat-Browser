@@ -2,8 +2,10 @@
     import {onMount} from "svelte";
     import * as d3 from 'd3';
     import { createEventDispatcher } from 'svelte';
+    import {Cart} from "/src/stores/CartStore";
     import Basepairs from "/src/json/rb_basepair.json"
     import mm10Basepairs from "/src/json/rb_basepair_mm10.json"
+    import hg19Basepairs from "/src/json/rb_basepair_hg19.json"
 
     export let inputRange;
     export let inputData;
@@ -16,6 +18,10 @@
         fastqInput = mm10Basepairs[repeatName];
     } else {
         fastqInput = new Array(inputRange).fill("N");
+    }
+
+    if ($Cart.assembly === "hg19"){
+        fastqInput = hg19Basepairs[repeatName];
     }
 
     // let fastqInput = Array.from({length: 800}, () => Math.floor(Math.random() * 4));

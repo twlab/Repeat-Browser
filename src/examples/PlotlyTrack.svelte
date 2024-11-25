@@ -110,7 +110,7 @@
 </script>
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <label for="colorPicker" style="margin-right: 10px;">Choose plot color:</label>
+    <label for="colorPicker" style="margin-right: 10px;">Genome Copy color:</label>
     <input id="colorPicker" type="color" bind:value={userSelectedColor}>
 </div>
 

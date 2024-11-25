@@ -72,6 +72,7 @@
       loaded = false;
     }
   });
+  console.log(Cart);
 
   $: yRange = parseInt(1.1 * Math.max(...$Cart.consensuslist.map(x => x.y_range)));
   // $: console.log(yRange);
@@ -82,7 +83,7 @@
 
 {#if loaded}
   <h5 class="flex items-center p-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-    Consensus View: {repeatName}
+    Consensus View: {repeatName} ({$Cart.assembly})
     <ElementScreenshot elementID="consensusView"/>
   </h5>
   <div class="flex flex-wrap">

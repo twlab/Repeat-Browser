@@ -34,7 +34,6 @@ export async function getZarrStatdata(FILE, SUBFAMILIES) {
     const z = await openArray({ store: zarr_url + 'subfam_stat'});
 
     const data_test = await z.get(null);
-    console.log(data_test);
     const response = await fetch(zarr_url + '\.zattrs');
     const data = await response.json();
     const sub_stat_list = data['subfamily_stat'];

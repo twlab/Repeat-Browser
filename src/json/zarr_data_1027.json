@@ -260,5 +260,6 @@
     {"name":"MLT1J","family":"ERVL-MaLR","class":"LTR","size":1},
     {"name":"MLT1L","family":"ERVL-MaLR","class":"LTR","size":1},
     {"name":"AmnSINE1","family":"5S-Deu-L2","class":"SINE","size":1}
-  ]
+  ],
+  "biosample": "Human"
 }

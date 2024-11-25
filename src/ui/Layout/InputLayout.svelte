@@ -129,6 +129,19 @@
             <Content>
                 <List>
                     <Item
+                            on:click="{() => functionWithOK()}"
+                    >
+                        {#if $Cart.biosample === 'Mouse'}
+                            <Graphic class="material-icons" aria-hidden="true"> pest_control_rodent </Graphic>
+                        {:else}
+                            <Graphic class="material-icons" aria-hidden="true"> accessibility_new </Graphic>
+                        {/if}
+                        <Text> Species: {$Cart.biosample} </Text>
+                    </Item>
+
+                    <Separator />
+
+                    <Item
                             href="javascript:void(0)"
                             on:click={() => setActive('Data View')}
                             activated={location.pathname === '/input/display'}
@@ -162,19 +175,6 @@
                     >
                         <Graphic class="material-icons" aria-hidden="true">pie_chart</Graphic>
                         <Text>Repeats Selection</Text>
-                    </Item>
-
-                    <Separator />
-
-                    <Item
-                            on:click="{() => functionWithOK()}"
-                    >
-                        {#if $Cart.biosample === 'Mouse'}
-                            <Graphic class="material-icons" aria-hidden="true"> pest_control_rodent </Graphic>
-                        {:else}
-                            <Graphic class="material-icons" aria-hidden="true"> accessibility_new </Graphic>
-                        {/if}
-                        <Text> Species: {$Cart.biosample} </Text>
                     </Item>
                 </List>
             </Content>

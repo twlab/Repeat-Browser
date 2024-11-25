@@ -559,7 +559,7 @@ export async function getBackendjson(DATASETS, KEY, SUBFAMILIES){
         let result_all = simpleRequest(backend_input_str_all);
         let result_unique = simpleRequest(backend_input_str_unique);
         const resultJson = await result_unique;
-        // console.log(resultJson);
+        console.log(resultJson);
 
         return resultJson
 

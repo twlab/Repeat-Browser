@@ -171,9 +171,9 @@
 </script>
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <label for="colorPicker1" style="margin-right: 10px;">Choose plot color1:</label>
+    <label for="colorPicker1" style="margin-right: 5px;">Multi-mapped Reads: </label>
         <input id="colorPicker1" type="color" bind:value={userSelectedColor1}>
-    <label for="colorPicker2" style="margin-right: 10px;">Choose plot color2:</label>
+    <label for="colorPicker2" style="margin-right: 5px; margin-left: 10px;">Unique mapped Reads:</label>
         <input id="colorPicker2" type="color" bind:value={userSelectedColor2}>
 </div>
 

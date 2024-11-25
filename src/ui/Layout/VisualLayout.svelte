@@ -140,6 +140,19 @@
         <Content>
             <List>
                 <Item
+                        on:click="{() => functionWithOK()}"
+                >
+                    {#if $Cart.biosample === 'Mouse'}
+                        <Graphic class="material-icons" aria-hidden="true"> pest_control_rodent </Graphic>
+                    {:else}
+                        <Graphic class="material-icons" aria-hidden="true"> accessibility_new </Graphic>
+                    {/if}
+                    <Text> Species: {$Cart.biosample} </Text>
+                </Item>
+
+                <Separator />
+
+                <Item
                         href="javascript:void(0)"
                         on:click={() => setActive('Heatmap')}
                         activated={location.pathname === '/visual/heatmap'}
@@ -167,20 +180,6 @@
                     <Graphic class="material-icons" aria-hidden="true">biotech</Graphic>
                     <Text id="genome-drawer-bar">Genome View</Text>
                 </Item>
-
-                <Separator />
-
-                <Item
-                        on:click="{() => functionWithOK()}"
-                >
-                    {#if $Cart.biosample === 'Mouse'}
-                        <Graphic class="material-icons" aria-hidden="true"> pest_control_rodent </Graphic>
-                    {:else}
-                        <Graphic class="material-icons" aria-hidden="true"> accessibility_new </Graphic>
-                    {/if}
-                    <Text> Species: {$Cart.biosample} </Text>
-                </Item>
-
             </List>
         </Content>
     </Drawer>

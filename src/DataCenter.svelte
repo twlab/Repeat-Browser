@@ -9,15 +9,23 @@
   const columns = ["ID", "Assay", "Biosample Type", "Control", "Assembly", "Target", "Status"];
 
   function searchFor(search) {
-    return _data.filter(item => {
-      return Object.values(item).some(value => {
-        if (typeof value === "number") {
-          value = String(value);
-        }
-        if (typeof value === "object") {
-          value = formatDate(value);
-        }
-        return value.toLowerCase().includes(search.toLowerCase());
+    const searchTerms = search.toLowerCase().split(' ').filter(term => term); // Split the search string into words
+    const filteredZarrData = _data.map(item => {
+      const { Zarr, ...rest } = item; // Destructure and exclude the "Zarr" key
+      return rest; // Return the object without the "Zarr" key
+    });
+
+    return filteredZarrData.filter(item => {
+      return searchTerms.every(term => { // Ensure every search term is found
+        return Object.values(item).some(value => {
+          if (typeof value === "number") {
+            value = String(value);
+          }
+          if (typeof value === "object" && value !== null) {
+            value = formatDate(value); // Assuming formatDate returns a string
+          }
+          return value.toLowerCase().includes(term);
+        });
       });
     });
   }
@@ -33,15 +41,16 @@
 
   function updateCart(input) {
     let found = $Cart.data.filter(d => d.id === input.detail.row.id);
-    if (($Cart.biosample === "Human" && (input.detail.row.Organism.includes('hg') || input.detail.row.Organism.includes('GRCh'))) ||
-            ($Cart.biosample === "Mouse" && (input.detail.row.Organism.includes('mm')))){
+    if ((($Cart.biosample === "Human" && (input.detail.row.Organism.includes('hg') || input.detail.row.Organism.includes('GRCh'))) ||
+            ($Cart.biosample === "Mouse" && (input.detail.row.Organism.includes('mm')))) && ((typeof $Cart.assembly === 'undefined') || ($Cart.assembly === "hg38" && input.detail.row.Organism.includes('38')) ||
+            ($Cart.assembly === "hg19" && input.detail.row.Organism.includes('19')) || ($Cart.assembly === "mm10" && input.detail.row.Organism.includes('mm')))){
       if (found.length > 0) {
         Cart.addDataItems($Cart.data.filter(d => d.id !== input.detail.row.id));
       } else {
         Cart.addDataItems([...new Set([...$Cart.data, input.detail.row])]);
       }
     } else {
-      alert("Please choose the correct species!");
+      alert("Please choose the correct species or assembly!");
     }
 
   }
