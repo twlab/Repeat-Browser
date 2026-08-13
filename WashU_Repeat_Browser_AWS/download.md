@@ -1,13 +1,13 @@
 # Download WashU Repeat Browser Data from AWS Open Data
 
-The WashU Repeat Browser collection is being prepared for the Registry of Open Data on AWS. Replace `<bucket>` and `<region>` below after the final public S3 bucket is provisioned.
+The WashU Repeat Browser collection is publicly available from the `washu-repeat-browser` S3 bucket in `us-east-2`. No AWS account is required.
 
 ## Data structure
 
 Data are organized by reference assembly and assay:
 
 ```text
-<bucket>/
+s3://washu-repeat-browser/
 ├── hg38/{atac-seq,cage-seq,newcage-seq,dnase-seq,chip-seq/{histone,tf}}/
 ├── mm10/{atac-seq,dnase-seq,chip-seq/{histone,tf}}/
 ├── documentation/
@@ -22,11 +22,11 @@ Install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-s
 
 ```bash
 # List the top level
-aws s3 ls --no-sign-request s3://<bucket>/
+aws s3 ls --no-sign-request --region us-east-2 s3://washu-repeat-browser/
 
 # Download one metadata table
 aws s3 cp --no-sign-request \
-  s3://<bucket>/hg38/chip-seq/histone/hg38_Histone_Chipseq_all.csv \
+  s3://washu-repeat-browser/hg38/chip-seq/histone/hg38_Histone_Chipseq_all.csv \
   ./hg38_Histone_Chipseq_all.csv
 ```
 
@@ -38,7 +38,7 @@ Individual public objects can also be accessed without AWS credentials:
 
 ```bash
 curl -O \
-  https://<bucket>.s3.<region>.amazonaws.com/hg38/chip-seq/histone/hg38_Histone_Chipseq_all.csv
+  https://washu-repeat-browser.s3.us-east-2.amazonaws.com/hg38/chip-seq/histone/hg38_Histone_Chipseq_all.csv
 ```
 
 ## Python
@@ -48,7 +48,7 @@ import pandas as pd
 import s3fs
 
 fs = s3fs.S3FileSystem(anon=True)
-path = "<bucket>/hg38/chip-seq/histone/hg38_Histone_Chipseq_all.csv"
+path = "washu-repeat-browser/hg38/chip-seq/histone/hg38_Histone_Chipseq_all.csv"
 
 with fs.open(path, "rb") as handle:
     metadata = pd.read_csv(handle)
