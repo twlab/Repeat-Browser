@@ -6,7 +6,7 @@
 
 The [WashU Repeat Browser](https://repeatbrowser.org/) dataset provides processed genomic and epigenomic profiles for studying repetitive elements and transposable elements in the human (`hg38`) and mouse (`mm10`) genomes. It integrates public data from ENCODE, Roadmap Epigenomics and FANTOM for TE-subfamily enrichment, consensus-sequence profiles and locus-level visualization.
 
-The collection is approximately **2.1 TB** and contains **8,774 processed dataset entries**: 5,680 for `hg38` and 3,094 for `mm10`. An entry is a processed data directory, often linked to an ENCODE file accession; it is not necessarily an independent biological experiment.
+The collection is approximately **2.19 TiB** and contains **8,774 processed dataset entries**: 5,680 for `hg38` and 3,094 for `mm10`. An entry is a processed data directory, often linked to an ENCODE file accession; it is not necessarily an independent biological experiment.
 
 ## Dataset coverage
 
@@ -27,7 +27,7 @@ The collection is approximately **2.1 TB** and contains **8,774 processed datase
 Data are organized by reference assembly, assay and processed accession:
 
 ```text
-<bucket>/
+s3://washu-repeat-browser/
 ├── hg38/{atac-seq,cage-seq,newcage-seq,dnase-seq,chip-seq/{histone,tf}}/
 ├── mm10/{atac-seq,dnase-seq,chip-seq/{histone,tf}}/
 ├── documentation/
@@ -77,12 +77,7 @@ The TE subfamily is stored in the array name, such as `signal_loci_MER70B`. Thes
 
 ## Access and tested examples
 
-The final AWS bucket name and Region are pending. See [download.md](download.md) for AWS CLI, HTTPS and Python access commands after provisioning.
-
-Two existing endpoints are useful for testing but are not substitutes for the final Registry resource:
-
-- `s3://repeatbrowsers/Zarr_data/example.zarr` is an AWS-hosted processing example in `us-east-2`. It supports anonymous object reads and contains ordinary `loci_*` arrays.
-- `https://s3-obs1.htcf.wustl.edu/repeatbrowser/` is the active WUSTL S3-compatible endpoint used by the application. It includes ChIP-seq Experiment-mode signal and control arrays but is not an AWS S3 bucket.
+The public dataset is available without an AWS account at `s3://washu-repeat-browser` in `us-east-2`. See [download.md](download.md) for AWS CLI, HTTPS and Python examples.
 
 ### Read a locus-level Zarr chunk
 
@@ -95,7 +90,8 @@ import numpy as np
 import requests
 
 base = (
-    "https://s3-obs1.htcf.wustl.edu/repeatbrowser/hg38/chip-seq/histone/"
+    "https://washu-repeat-browser.s3.us-east-2.amazonaws.com/"
+    "hg38/chip-seq/histone/"
     "Processed_ENCFF032RWB_signal/ENCFF032RWB_signal.zarr/"
     "signal_loci_MER70B"
 )
@@ -173,16 +169,7 @@ Contacts: Jiawei Shen (`jiaweishen@wustl.edu`) and Daofeng Li (`dli23@wustl.edu`
 | `repeat-browser-aws-feature-draft.docx` | Five-question institutional provider profile |
 | `assets/` | Logo and four interface examples |
 
-### Required before submission
-
-- [ ] Add the final bucket name to the YAML, README, download guide and notebook, and add the AWS Region wherever required.
-- [ ] Confirm anonymous `ListBucket` and `GetObject` access, CORS settings, and requester-pays/account requirements.
-- [ ] Publish this README and the notebook at stable public URLs.
-- [ ] Test the notebook against the final bucket and clear all outputs before committing it.
-- [ ] Update the Registry dates when the pull request is prepared.
-- [ ] Send the logo to `opendata@amazon.com` and open a draft Registry pull request.
-
-CC BY 4.0, the application responses and the first `DataAtWork.Tutorials` entry are complete.
+The bucket supports anonymous `ListBucket` and `GetObject` access, HTTPS range requests and CORS. Requester Pays is disabled and an AWS account is not required.
 
 ## Related resources
 
